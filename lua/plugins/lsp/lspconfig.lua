@@ -9,19 +9,19 @@ return {
     { "antosha417/nvim-lsp-file-operations", config = true },
     -- Utile pour éditer les fichiers lua spécifiques à la config neovim
     -- Notamment pour éviter le "Undefined global `vim`"
-    { "folke/lazydev.nvim", opts = {} },
+    { "folke/lazydev.nvim",                  opts = {} },
   },
   keys = {
-    { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
-    { "gR", "<cmd>Telescope lsp_references<CR>", desc = "Show LSP references", mode = "n" },
-    { "gD", vim.lsp.buf.declaration, desc = "Go to declaration", mode = "n" },
-    { "gd", "<cmd>Telescope lsp_definitions<CR>", desc = "Show LSP definitions", mode = "n" },
-    { "gi", "<cmd>Telescope lsp_implementations<CR>", desc = "Show LSP implementations", mode = "n" },
-    { "gt", "<cmd>Telescope lsp_type_definitions<CR>", desc = "Show LSP type definitions", mode = "n" },
-    { "gs", vim.lsp.buf.signature_help, desc = "Show LSP signature help", mode = "n" },
-    { "<leader>rn", vim.lsp.buf.rename, desc = "Smart rename", mode = "n" },
-    { "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", desc = "Show buffer diagnostics", mode = "n" },
-    { "<leader>d", vim.diagnostic.open_float, desc = "Show line diagnostics", mode = "n" },
+    { "<leader>ca", vim.lsp.buf.code_action,                   desc = "Code Action",               mode = { "n", "v" } },
+    { "gR",         "<cmd>Telescope lsp_references<CR>",       desc = "Show LSP references",       mode = "n" },
+    { "gD",         vim.lsp.buf.declaration,                   desc = "Go to declaration",         mode = "n" },
+    { "gd",         "<cmd>Telescope lsp_definitions<CR>",      desc = "Show LSP definitions",      mode = "n" },
+    { "gi",         "<cmd>Telescope lsp_implementations<CR>",  desc = "Show LSP implementations",  mode = "n" },
+    { "gt",         "<cmd>Telescope lsp_type_definitions<CR>", desc = "Show LSP type definitions", mode = "n" },
+    { "gs",         vim.lsp.buf.signature_help,                desc = "Show LSP signature help",   mode = "n" },
+    { "<leader>rn", vim.lsp.buf.rename,                        desc = "Smart rename",              mode = "n" },
+    { "<leader>D",  "<cmd>Telescope diagnostics bufnr=0<CR>",  desc = "Show buffer diagnostics",   mode = "n" },
+    { "<leader>d",  vim.diagnostic.open_float,                 desc = "Show line diagnostics",     mode = "n" },
     {
       "[d",
       function()
@@ -38,9 +38,9 @@ return {
       desc = "Go to next diagnostic",
       mode = "n",
     },
-    { "K", vim.lsp.buf.hover, desc = "Show documentation for what is under cursor", mode = "n" },
-    { "<leader>F", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "Format buffer", mode = { "n", "x" } },
-    { "<leader>rs", ":LspRestart<CR>", desc = "Restart LSP", mode = "n" },
+    { "K",          vim.lsp.buf.hover,                                 desc = "Show documentation for what is under cursor", mode = "n" },
+    { "<leader>F",  "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "Format buffer",                               mode = { "n", "x" } },
+    { "<leader>rs", ":LspRestart<CR>",                                 desc = "Restart LSP",                                 mode = "n" },
   },
   config = function()
     -- Customize error signs
@@ -120,6 +120,31 @@ return {
         },
       },
     })
+
+    -- 1. On force Neovim à reconnaître l'extension .xaml comme du XML
+    vim.filetype.add({
+      extension = {
+        xaml = "xml",
+      },
+    })
+
+    -- 2. Configuration de Lemminx
+    local lspconfig = require("lspconfig")
+    lspconfig.lemminx.setup({
+      -- On s'assure que le serveur s'active sur les fichiers xaml et xml
+      filetypes = { "xml", "xaml", "xsd", "xsl", "html", "svg" },
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      settings = {
+        xml = {
+          format = {
+            enabled = true,
+            splitAttributes = true, -- Met chaque attribut sur une nouvelle ligne (plus lisible en WPF)
+          },
+          completion = {
+            autoCloseTags = true,
+          },
+        },
+      },
+    })
   end,
 }
-

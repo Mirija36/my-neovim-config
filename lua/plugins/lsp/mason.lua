@@ -1,17 +1,20 @@
 return {
-  "mason-org/mason.nvim",
+  "williamboman/mason.nvim",
   dependencies = {
-    "mason-org/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim",
   },
   config = function()
     -- import de mason
     local mason = require("mason")
-
     -- import de mason-lspconfig
     local mason_lspconfig = require("mason-lspconfig")
 
     -- Active mason et personnalise les icônes
     mason.setup({
+      registries = {
+        'github:Crashdummyy/mason-registry',
+        'github:mason-org/mason-registry',
+      },
       ui = {
         icons = {
           package_installed = "✓",
@@ -41,8 +44,13 @@ return {
         "svelte",
         "ts_ls",
         "yamlls",
+        --"roslyn",
+        "lemminx"
       },
     })
+    local registry = require("mason-registry")
+    if not registry.is_installed("roslyn") then
+      vim.cmd("MasonInstall roslyn")
+    end
   end,
 }
-
