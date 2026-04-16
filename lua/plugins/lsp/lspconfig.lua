@@ -121,30 +121,34 @@ return {
       },
     })
 
-    -- 1. On force Neovim à reconnaître l'extension .xaml comme du XML
-    vim.filetype.add({
-      extension = {
-        xaml = "xml",
+    -- 1. On définit la configuration pour lemminx
+    vim.lsp.config("lemminx", {
+      install = {
+        package = "lemminx",
       },
-    })
-
-    -- 2. Configuration de Lemminx
-    local lspconfig = require("lspconfig")
-    lspconfig.lemminx.setup({
-      -- On s'assure que le serveur s'active sur les fichiers xaml et xml
       filetypes = { "xml", "xaml", "xsd", "xsl", "html", "svg" },
-      capabilities = require("cmp_nvim_lsp").default_capabilities(),
       settings = {
         xml = {
           format = {
             enabled = true,
-            splitAttributes = true, -- Met chaque attribut sur une nouvelle ligne (plus lisible en WPF)
+            splitAttributes = true,
           },
-          completion = {
-            autoCloseTags = true,
-          },
+          completion = { autoCloseTags = true },
         },
       },
+    })
+
+    -- 2. On lance le serveur avec la configuration associée
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "xml", "xaml" },
+      callback = function(args)
+        -- On récupère la config qu'on vient de définir pour lemminx
+        local config = vim.lsp.config("lemminx")
+        if config then
+          -- On passe la table 'config' au lieu d'un simple string
+          vim.lsp.start(config)
+        end
+      end,
     })
   end,
 }
