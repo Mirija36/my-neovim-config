@@ -31,3 +31,8 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Déplace le curseur dans la fenêtre dr
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
+keymap("n", "<leader>fe", "<cmd>FlutterRun<cr>", { desc = "Lancer Flutter" })
+keymap("n", "<leader>fr", "<cmd>FlutterReload<cr>", { desc = "Hot Reload" })
+keymap("n", "<leader>fR", "<cmd>FlutterRestart<cr>", { desc = "Hot Restart" })
+keymap("n", "<leader>fq", "<cmd>FlutterQuit<cr>", { desc = "Quitter Flutter" })
+keymap("n", "<leader>fl", "<cmd>FlutterLogToggle<cr>", { desc = "Logs Flutter" })
