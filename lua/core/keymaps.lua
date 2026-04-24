@@ -36,3 +36,15 @@ keymap("n", "<leader>fr", "<cmd>FlutterReload<cr>", { desc = "Hot Reload" })
 keymap("n", "<leader>fR", "<cmd>FlutterRestart<cr>", { desc = "Hot Restart" })
 keymap("n", "<leader>fq", "<cmd>FlutterQuit<cr>", { desc = "Quitter Flutter" })
 keymap("n", "<leader>fl", "<cmd>FlutterLogToggle<cr>", { desc = "Logs Flutter" })
+
+vim.keymap.set('i', '<C-M-Left>', '<Esc>v<Left>', { desc = 'Sélectionner vers la gauche' })
+vim.keymap.set('v', '<C-M-Left>', '<Left>', { desc = 'Étendre sélection gauche' })
+
+vim.keymap.set('i', '<C-M-Right>', '<Esc>v<Right>', { desc = 'Sélectionner vers la droite' })
+vim.keymap.set('v', '<C-M-Right>', '<Right>', { desc = 'Étendre sélection droite' })
+
+vim.keymap.set('i', '<C-M-Up>', '<Esc><Up>', { desc = 'Déplacer curseur haut' })
+vim.keymap.set('v', '<C-M-Up>', '<Esc><Up>', { desc = 'Sortir du visuel et monter' })
+
+vim.keymap.set('i', '<C-M-Down>', '<Esc><Down>', { desc = 'Déplacer curseur bas' })
+vim.keymap.set('v', '<C-M-Down>', '<Esc><Down>', { desc = 'Sortir du visuel et descendre' })
