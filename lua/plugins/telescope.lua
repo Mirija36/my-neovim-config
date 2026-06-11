@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  branch = "master",
   dependencies = {
     "nvim-lua/plenary.nvim",
     -- fzf implémentation en C pour plus de rapidité
@@ -10,6 +10,7 @@ return {
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local builtin = require("telescope.builtin")
 
     telescope.setup({
       defaults = {
@@ -36,28 +37,34 @@ return {
 
     keymap.set(
       "n",
+      "<C-f>",
+      builtin.current_buffer_fuzzy_find,
+      { desc = "Fuzzy find dans le fichier actuel (Ctrl+F)" }
+    )
+
+    keymap.set(
+      "n",
       "<leader>ff",
-      "<cmd>Telescope find_files<cr>",
+      builtin.find_files,
       { desc = "Recherche de chaînes de caractères dans les noms de fichiers" }
     )
     keymap.set(
       "n",
       "<leader>fg",
-      "<cmd>Telescope live_grep<cr>",
+      builtin.live_grep,
       { desc = "Recherche de chaînes de caractères dans le contenu des fichiers" }
     )
     keymap.set(
       "n",
       "<leader>fb",
-      "<cmd>Telescope buffers<cr>",
+      builtin.buffers,
       { desc = "Recherche de chaînes de caractères dans les noms de buffers" }
     )
     keymap.set(
       "n",
       "<leader>fx",
-      "<cmd>Telescope grep_string<cr>",
+      builtin.grep_string,
       { desc = "Recherche de la chaîne de caractères sous le curseur" }
     )
   end,
 }
-
