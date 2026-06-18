@@ -43,6 +43,7 @@ return {
         "sqlls",
         "svelte",
         "ts_ls",
+        "intelephense",
         "yamlls",
         --"roslyn",
         "lemminx"

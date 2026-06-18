@@ -150,5 +150,46 @@ return {
         end
       end,
     })
+
+    vim.lsp.config("ts_ls", {
+      settings = {
+        javascript = {
+          suggest = { completeFunctionCalls = true },
+          preferences = { quoteStyle = "single" }, -- Préfère les guillemets simples en JS
+        },
+        typescript = {
+          suggest = { completeFunctionCalls = true },
+          preferences = { quoteStyle = "single" },
+        },
+      },
+    })
+
+    vim.lsp.config("intelephense", {
+      settings = {
+        intelephense = {
+          files = {
+            maxSize = 5000000, -- Limite à 5MB par fichier pour éviter de ramer
+          },
+          format = {
+            enable = true, -- Active le formatage via <leader>F
+          },
+        },
+      },
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+      callback = function()
+        local config = vim.lsp.config("ts_ls")
+        if config then vim.lsp.start(config) end
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "php" },
+      callback = function()
+        local config = vim.lsp.config("intelephense")
+        if config then vim.lsp.start(config) end
+      end,
+    })
   end,
 }
